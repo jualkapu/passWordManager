@@ -18,6 +18,7 @@ public class PasswordDatabase {
     // Delimiter used to separate fields in the file.
     private static final String DELIMITER = ",";
 
+
     /**
      * Retrieves a list of password entries from the file.
      *
@@ -41,6 +42,7 @@ public class PasswordDatabase {
         return entries;
     }
 
+
     /**
      * Saves a new password entry to the file.
      *
@@ -55,6 +57,7 @@ public class PasswordDatabase {
             e.printStackTrace();
         }
     }
+
 
     /**
      * Retrieves the details of a specific password entry based on its title.
@@ -84,20 +87,61 @@ public class PasswordDatabase {
      * @param newDetails The new details to set for the entry.
      */
     public static void updatePasswordEntry(String entryTitle, String[] newDetails) {
-
         // Retrieve all existing entries from the database
         List<String[]> entries = getPasswordEntries();
 
-        // write the entries back to the file, but with the selected entry updated with the new details.
+        // Iterate through each entry to find and update the specified entry
+        for (int i = 0; i < entries.size(); i++) {
+            String[] entry = entries.get(i);
+            String title = entry[0];
+
+            if (title.equals(entryTitle)) {
+                // Update the entry with new details
+                entries.set(i, newDetails);
+                break; // Exit the loop once the entry is updated
+            }
+        }
+
+        // Update the file with the modified entries
+        updateFile(entries);
+    }
+
+
+    /**
+     * Deletes a password entry from the file.
+     *
+     * @param entryTitle The title of the entry to delete.
+     */
+    public static void deletePasswordEntry(String entryTitle) {
+        // Retrieve all existing entries from the database
+        List<String[]> entries = getPasswordEntries();
+
+        // Identify and remove the entry to be deleted
+        for (int i = 0; i < entries.size(); i++) {
+            String[] entry = entries.get(i);
+            String title = entry[0];
+
+            if (title.equals(entryTitle)) {
+                // Remove the entry from the list
+                entries.remove(i);
+
+                // Write the updated entries back to the file
+                updateFile(entries);
+                break;
+            }
+        }
+    }
+
+
+    /**
+     * Updates the passwords.txt file with the provided list of password entries.
+     *
+     * @param entries The list of password entries to be written to the file.
+     */
+    private static void updateFile(List<String[]> entries) {
+        // Write the updated entries back to the passwords.txt file
         try (FileWriter writer = new FileWriter(FILE_PATH)) {
             for (String[] entry : entries) {
-                String title = entry[0];
-                if (title.equals(entryTitle)) {
-                    // Update the entry with new details
-                    entry = newDetails;
-                }
-
-                // Write the updated or unchanged entry to the file
                 String line = String.join(DELIMITER, entry);
                 writer.write(line + "\n");
             }

@@ -78,7 +78,7 @@
             </BorderPane>
          </center>
          <top>
-            <Label text="Add new entry" BorderPane.alignment="CENTER">
+            <Label text="Edit current entry" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets top="10.0" />
                </BorderPane.margin>

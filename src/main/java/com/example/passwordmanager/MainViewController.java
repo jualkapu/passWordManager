@@ -32,6 +32,7 @@ public class MainViewController {
     @FXML
     private ListView<String> passwordListView;
 
+
     /**
      * Sets up the initial state of the UI.
      * - Fetches entries from the file and displays them in the ListView.
@@ -47,8 +48,8 @@ public class MainViewController {
         // Handler (showSelectedEntryDetails) is triggered whenever an item in the ListView is selected.
         passwordListView.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showSelectedEntryDetails(newValue));
-
     }
+
 
     /**
      * Handles the "Add New" button click event.
@@ -76,6 +77,28 @@ public class MainViewController {
             throw new RuntimeException(e);
         }
     }
+
+
+    /**
+     * Handles the "Delete" button click event.
+     */
+    @FXML
+    public void handleDeleteButtonClick() {
+
+        // Gets the index of the currently selected item in the ListView.
+        int selectedIndex = passwordListView.getSelectionModel().getSelectedIndex();
+
+        // If nothing is selected the index is >= 0
+        if (selectedIndex >= 0) {
+            // Remove the selected item from the list
+            String deletedEntry = passwordListView.getItems().get(selectedIndex);
+
+            // Remove the entry from the passwords.txt file using PasswordDatabase
+            PasswordDatabase.deletePasswordEntry(deletedEntry);
+            loadPasswordEntries();
+        }
+    }
+
 
     /**
      * Handles the "Edit" button click event.
@@ -113,6 +136,7 @@ public class MainViewController {
         }
     }
 
+
     /**
      * Handles the "Copy" button click event for the username field.
      * Copies the current value of the usernameTextField to the clipboard.
@@ -123,6 +147,7 @@ public class MainViewController {
         copyToClipboard(username);
     }
 
+
     /**
      * Handles the "Copy" button click event for the password field.
      * Copies the current value of the passwordTextField to the clipboard.
@@ -132,6 +157,7 @@ public class MainViewController {
         String password = passwordTextField.getText();
         copyToClipboard(password);
     }
+
 
     /**
      * Copies the given text to the clipboard.
@@ -144,6 +170,7 @@ public class MainViewController {
         content.putString(text);
         clipboard.setContent(content);
     }
+
 
     /**
      * Updates the username and password text fields when an entry is selected.
@@ -170,6 +197,7 @@ public class MainViewController {
             }
         }
     }
+
 
     /**
      * Load password entries and populate the ListView.

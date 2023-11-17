@@ -20,8 +20,8 @@ public class AddEntryController {
     public TextField titleField;
     public Button randomizeButton;
     public TextField passwordField;
-
     private MainViewController mainViewController;
+
 
     /**
      * Sets the reference to the MainViewController.
@@ -31,6 +31,7 @@ public class AddEntryController {
     public void setMainViewController(MainViewController mainViewController) {
         this.mainViewController = mainViewController;
     }
+
 
     /**
      * Handles the action event when the "Add" button is clicked.
@@ -62,6 +63,7 @@ public class AddEntryController {
         }
     }
 
+
     /**
      * Closes the current view (window).
      */
@@ -72,6 +74,7 @@ public class AddEntryController {
         stage.close();
     }
 
+
     /**
      * Generates a random password and sets it to the passwordField.
      */
@@ -81,6 +84,7 @@ public class AddEntryController {
         String randomPassword = generateRandomPasswordString();
         passwordField.setText(randomPassword);
     }
+
 
     /**
      * Generates a random password string.
@@ -102,6 +106,7 @@ public class AddEntryController {
 
         return password.toString();
     }
+
 
     /**
      * Validates the input fields and updates styles accordingly.
@@ -139,5 +144,4 @@ public class AddEntryController {
 
         return isValid;
     }
-
 }

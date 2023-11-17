@@ -20,8 +20,8 @@ public class EditEntryController {
     public TextField titleField;
     public Button randomizeButton;
     public TextField passwordField;
-
     private MainViewController mainViewController;
+
 
     /**
      * Sets the reference to the MainViewController.
@@ -31,6 +31,7 @@ public class EditEntryController {
     public void setMainViewController(MainViewController mainViewController) {
         this.mainViewController = mainViewController;
     }
+
 
     /**
      * Handles the action event when the "Save" button is clicked in the Edit Entry view.
@@ -73,6 +74,7 @@ public class EditEntryController {
         }
     }
 
+
     /**
      * Closes the current view (window).
      */
@@ -83,6 +85,7 @@ public class EditEntryController {
         stage.close();
     }
 
+
     /**
      * Generates a random password and sets it to the passwordField.
      */
@@ -92,6 +95,7 @@ public class EditEntryController {
         String randomPassword = generateRandomPasswordString();
         passwordField.setText(randomPassword);
     }
+
 
     /**
      * Generates a random password string.
@@ -113,6 +117,7 @@ public class EditEntryController {
 
         return password.toString();
     }
+
 
     /**
      * Validates the input fields and updates styles accordingly.
@@ -167,5 +172,4 @@ public class EditEntryController {
             passwordField.setText(entryDetails[2]);
         }
     }
-
 }
