@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -73,6 +75,74 @@ public class MainViewController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Handles the "Edit" button click event.
+     */
+    @FXML
+    public void handleEditButtonClick() {
+        // Check if an item is selected in the ListView
+        String selectedEntry = passwordListView.getSelectionModel().getSelectedItem();
+        if (selectedEntry != null) {
+            try {
+                // Load the "Edit Entry" window FXML
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("edit-entry-view.fxml"));
+                Parent root1 = (Parent) fxmlLoader.load();
+
+                // Get the controller of the EditEntryView
+                EditEntryController editEntryController = fxmlLoader.getController();
+
+                // Pass a reference to MainViewController
+                editEntryController.setMainViewController(this);
+
+                // Retrieve details of the selected entry and pass them to the EditEntryController
+                String[] entryDetails = PasswordDatabase.getEntryDetails(selectedEntry);
+                editEntryController.setEntryDetails(entryDetails);
+
+                // Set up the stage and show the window
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setTitle("Edit Entry");
+                stage.setScene(new Scene(root1));
+                stage.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    /**
+     * Handles the "Copy" button click event for the username field.
+     * Copies the current value of the usernameTextField to the clipboard.
+     */
+    @FXML
+    public void handleUsernameCopyButtonClick() {
+        String username = usernameTextField.getText();
+        copyToClipboard(username);
+    }
+
+    /**
+     * Handles the "Copy" button click event for the password field.
+     * Copies the current value of the passwordTextField to the clipboard.
+     */
+    @FXML
+    public void handlePasswordCopyButtonClick() {
+        String password = passwordTextField.getText();
+        copyToClipboard(password);
+    }
+
+    /**
+     * Copies the given text to the clipboard.
+     *
+     * @param text The text to be copied.
+     */
+    private void copyToClipboard(String text) {
+        Clipboard clipboard = Clipboard.getSystemClipboard();
+        ClipboardContent content = new ClipboardContent();
+        content.putString(text);
+        clipboard.setContent(content);
     }
 
     /**

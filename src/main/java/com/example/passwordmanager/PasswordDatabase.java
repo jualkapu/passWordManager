@@ -55,4 +55,54 @@ public class PasswordDatabase {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Retrieves the details of a specific password entry based on its title.
+     *
+     * @param entryTitle The title of the entry to retrieve.
+     * @return The details of the entry as a string array.
+     */
+    public static String[] getEntryDetails(String entryTitle) {
+        List<String[]> entries = getPasswordEntries();
+
+        for (String[] entry : entries) {
+            String title = entry[0];
+
+            if (title.equals(entryTitle)) {
+                return entry;
+            }
+        }
+
+        return null; // Entry not found
+    }
+
+
+    /**
+     * Updates an existing password entry in the file.
+     *
+     * @param entryTitle The title of the entry to update.
+     * @param newDetails The new details to set for the entry.
+     */
+    public static void updatePasswordEntry(String entryTitle, String[] newDetails) {
+
+        // Retrieve all existing entries from the database
+        List<String[]> entries = getPasswordEntries();
+
+        // write the entries back to the file, but with the selected entry updated with the new details.
+        try (FileWriter writer = new FileWriter(FILE_PATH)) {
+            for (String[] entry : entries) {
+                String title = entry[0];
+                if (title.equals(entryTitle)) {
+                    // Update the entry with new details
+                    entry = newDetails;
+                }
+
+                // Write the updated or unchanged entry to the file
+                String line = String.join(DELIMITER, entry);
+                writer.write(line + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -81,7 +81,7 @@
                                           </AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                              <children>
-                                                <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="88.0" text="Edit" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                <Button fx:id="editButton" mnemonicParsing="false" onAction="#handleEditButtonClick" prefHeight="32.0" prefWidth="88.0" text="Edit" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                              </children>
                                           </AnchorPane>
                                       </items>
@@ -109,12 +109,12 @@
                               <TextField fx:id="passwordTextField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" text="Copy" GridPane.columnIndex="2">
+                              <Button fx:id="usernameCopyButton" mnemonicParsing="false" onAction="#handleUsernameCopyButtonClick" text="Copy" GridPane.columnIndex="2">
                                  <GridPane.margin>
                                     <Insets left="5.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="Copy" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <Button fx:id="passwordCopyButton" mnemonicParsing="false" onAction="#handlePasswordCopyButtonClick" text="Copy" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="5.0" />
                                  </GridPane.margin>
