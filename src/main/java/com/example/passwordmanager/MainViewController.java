@@ -1,5 +1,6 @@
 package com.example.passwordmanager;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -216,5 +217,15 @@ public class MainViewController {
             String title = entry[0];
             passwordListView.getItems().add(title);
         }
+    }
+
+
+    /**
+     * Handles the "Quit" button click event.
+     */
+    @FXML
+    public void handleQuitButtonClick() {
+        // Terminate the JavaFX application
+        Platform.exit();
     }
 }
