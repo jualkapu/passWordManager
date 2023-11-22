@@ -13,7 +13,7 @@ import java.util.List;
 public class PasswordDatabase {
 
     // Path to the file where password entries are stored.
-    private static final String FILE_PATH = "passwords.txt";
+    private static String filePath = "";
 
     // Delimiter used to separate fields in the file.
     private static final String DELIMITER = ",";
@@ -27,7 +27,12 @@ public class PasswordDatabase {
     public static List<String[]> getPasswordEntries() {
         List<String[]> entries = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+        // Check if the file path is empty
+        if (filePath == null || filePath.isEmpty()) {
+            return entries;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
 
             // Read each line from the file and split it into fields using the delimiter
@@ -49,7 +54,7 @@ public class PasswordDatabase {
      * @param entry An array of strings representing the fields of the password entry.
      */
     public static void savePasswordEntry(String[] entry) {
-        try (FileWriter writer = new FileWriter(FILE_PATH, true)) {
+        try (FileWriter writer = new FileWriter(filePath, true)) {
             // Join the fields of the entry into a single line and write it to the file
             String line = String.join(DELIMITER, entry);
             writer.write(line + "\n");
@@ -140,7 +145,7 @@ public class PasswordDatabase {
      */
     private static void updateFile(List<String[]> entries) {
         // Write the updated entries back to the passwords.txt file
-        try (FileWriter writer = new FileWriter(FILE_PATH)) {
+        try (FileWriter writer = new FileWriter(filePath)) {
             for (String[] entry : entries) {
                 String line = String.join(DELIMITER, entry);
                 writer.write(line + "\n");
@@ -148,5 +153,21 @@ public class PasswordDatabase {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * Sets filepath to the database file used currently
+     */
+    public static void setFilePath(String newPath) {
+        filePath = newPath;
+    }
+
+
+    /**
+     * Gets filepath to the database file used currently
+     */
+    public static String getFilePath() {
+        return filePath;
     }
 }
